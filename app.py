@@ -1,12 +1,27 @@
 from fastapi import FastAPI, Query
 import pandas as pd
+import boto3
+from io import StringIO
 
 app = FastAPI()
 
 def fetch_data(year: int = None, country: str = None, market: str = None):
     try:
         # Read the CSV file into a DataFrame
-        df = pd.read_csv("C:\\Users\\rohan\\Downloads\\total_data.csv")
+        # Initialize S3 client
+        s3 = boto3.client('s3')
+
+        # Specify the bucket name and file key
+        bucket_name = 'truck-eta-classification-logs'
+        file_key = 'raw_food_data/total_data.csv'
+
+        # Download the file from S3
+        response = s3.get_object(Bucket=bucket_name, Key=file_key)
+        csv_content = response['Body'].read().decode('utf-8')
+
+        # Load CSV content into a pandas DataFrame
+        df = pd.read_csv(StringIO(csv_content))
+        
         # Apply filters based on provided parameters
         if year is not None:
             df = df[df['year'] == year]
