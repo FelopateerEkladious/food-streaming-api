@@ -11,7 +11,7 @@ def fetch_data(year: int = None, country: str = None, market: str = None):
     try:
         # Read the CSV file into a DataFrame
         # Initialize S3 client
-        s3 = boto3.client('s3')
+        s3 = boto3.client('s3',aws_access_key_id='AKIASCVPXXOP2SYHI7O6',aws_secret_access_key='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')
 
         # Specify the bucket name and file key
         bucket_name = 'truck-eta-classification-logs'
