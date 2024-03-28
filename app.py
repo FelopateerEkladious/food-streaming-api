@@ -23,18 +23,23 @@ def fetch_data(year: int = None, country: str = None, market: str = None):
 
         # Load CSV content into a pandas DataFrame
         df = pd.read_csv(StringIO(csv_content))
-        
+        print(df.shape[0])
         # Apply filters based on provided parameters
         if year is not None:
+            print("1")
             df = df[df['year'] == year]
         if country is not None:
+            print("2")
             df = df[df['country'] == country]
         if market is not None:
+            print("3")
             df = df[df['mkt_name'] == market]
 
         # Fill NaN values with empty strings
         df_filter = df.fillna('')
 
+        print(df_filter.shape[0])
+        
         # Convert filtered DataFrame to JSON
         if df_filter is None or df_filter.empty:
             raise ValueError('No data found for the specified filters.')
