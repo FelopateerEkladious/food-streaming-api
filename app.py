@@ -2,6 +2,8 @@ from fastapi import FastAPI, Query
 import pandas as pd
 import boto3
 from io import StringIO
+import uvicorn
+
 
 app = FastAPI()
 
